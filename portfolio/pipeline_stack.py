@@ -40,7 +40,10 @@ class PipelineStack(Stack):
         role.add_to_policy(
             iam.PolicyStatement(
                 effect=iam.Effect.ALLOW,
-                actions=['s3:*'],
+                actions=[
+                    's3:*',
+                    'cloudfront:CreateInvalidation'
+                ],
                 # resources=[website_bucket.bucket_arn]
                 resources=['*']
             )
@@ -74,7 +77,8 @@ class PipelineStack(Stack):
                         "commands": [
                             "echo cleaning up bucket...", 
                             f"aws s3 rm {bucket_uri} --recursive", 
-                            f"aws s3 cp ./build {bucket_uri} --recursive"
+                            f"aws s3 cp ./build {bucket_uri} --recursive", 
+                            f'aws cloudfront create-invalidation --distribution-id E2XI6RIYZ19GOU --paths "/*"'
                         ]
                     }
                 },
