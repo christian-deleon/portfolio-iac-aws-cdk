@@ -48,6 +48,7 @@ class BackendStack(Stack):
         self.bucket = s3.Bucket(self, "Bucket", 
             bucket_name=bucket_name, 
             website_index_document="index.html",
+            website_error_document="index.html",
             public_read_access=True, 
             auto_delete_objects=True, 
             removal_policy=RemovalPolicy.DESTROY
@@ -62,6 +63,13 @@ class BackendStack(Stack):
                 allowed_methods=cloudfront.AllowedMethods.ALLOW_ALL,
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS
             ), 
+            error_responses=[
+                cloudfront.ErrorResponse(
+                    http_status=404, 
+                    response_http_status=200,
+                    response_page_path="/index.html"
+                )
+            ],
         )
 
         if hosted_zone:
