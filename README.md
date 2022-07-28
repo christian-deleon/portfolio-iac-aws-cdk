@@ -105,7 +105,7 @@ Decide which architecture you would like to deploy and follow the instructions f
 
 7. Deploy the remaining stacks:
    ```bash
-   cdk deploy --all --require-approval="never"
+   cdk deploy --all
    ``` 
 
 8. Once the stacks have deployed and the pipeline has finished building head over to your domain name. Keep in mind, if you have a fresh domain and hosted zone that your records can take over a day to propagate.
