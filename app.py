@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import aws_cdk as cdk
 
 from portfolio.pipeline_stack import PipelineStack
@@ -29,6 +28,7 @@ PipelineStack(app,
     "PipelineStack", 
     github_connection_arn=github_connection_stack.connection_arn, 
     website_bucket=backend.bucket, 
+    distribution_id=backend.distribution.distribution_id,
     env=env
 )
 

@@ -54,7 +54,7 @@ class BackendStack(Stack):
             removal_policy=RemovalPolicy.DESTROY
         )
 
-        distribution = cloudfront.Distribution(self, "Distribution",
+        self.distribution = cloudfront.Distribution(self, "Distribution",
             default_root_object="index.html", 
             certificate=certificate, 
             domain_names=domain_names, 
@@ -77,6 +77,6 @@ class BackendStack(Stack):
                 zone=hosted_zone, 
                 record_name=config['route53.domain_name'], 
                 target=route53.RecordTarget.from_alias(
-                    route53_targets.CloudFrontTarget(distribution)
+                    route53_targets.CloudFrontTarget(self.distribution)
                 ),
             )

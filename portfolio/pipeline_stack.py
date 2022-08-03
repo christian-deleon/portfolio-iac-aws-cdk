@@ -20,6 +20,7 @@ class PipelineStack(Stack):
         construct_id: str, 
         github_connection_arn: str, 
         website_bucket: s3.Bucket, 
+        distribution_id: str,
         **kwargs
         ) -> None:
         
@@ -78,7 +79,7 @@ class PipelineStack(Stack):
                             "echo cleaning up bucket...", 
                             f"aws s3 rm {bucket_uri} --recursive", 
                             f"aws s3 cp ./build {bucket_uri} --recursive", 
-                            f'aws cloudfront create-invalidation --distribution-id E2XI6RIYZ19GOU --paths "/*"'
+                            f'aws cloudfront create-invalidation --distribution-id {distribution_id} --paths "/*"'
                         ]
                     }
                 },
